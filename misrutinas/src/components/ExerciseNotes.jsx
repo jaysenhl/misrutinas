@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MdAdd, MdEdit, MdDelete, MdCheck, MdClose, MdVisibility, MdVisibilityOff } from 'react-icons/md';
+import { MdAdd, MdEdit, MdDelete, MdCheck, MdClose, MdVisibility, MdVisibilityOff, MdNoteAdd } from 'react-icons/md';
 import { useWorkout } from '../context/WorkoutContext';
 import '../styles/ExerciseNotes.css';
 
@@ -40,7 +40,10 @@ const ExerciseNotes = () => {
   return (
     <div className="exercise-notes">
       <div className="notes-header">
-        <h2>Notas de la Rutina</h2>
+        <h2>
+          <MdNoteAdd className="header-icon" />
+          Notas de la Rutina
+        </h2>
         <button 
           className="toggle-notes-btn"
           onClick={() => setIsExpanded(!isExpanded)}

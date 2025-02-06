@@ -17,6 +17,8 @@
   margin: 0;
   font-size: 1.2rem;
   color: #333;
+  display: flex;
+  align-items: center;
 }
 
 .toggle-youtube-btn {
@@ -159,4 +161,11 @@
   .video-list {
     grid-template-columns: 1fr;
   }
+}
+
+.header-icon {
+  font-size: 1.4rem;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+  color: #d35400;
 } 

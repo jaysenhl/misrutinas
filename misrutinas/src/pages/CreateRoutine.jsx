@@ -7,6 +7,7 @@ import ExerciseNotes from '../components/ExerciseNotes';
 import Swal from 'sweetalert2';
 import '../styles/CreateRoutine.css';
 import YoutubeVideo from '../components/YoutubeVideo';
+import RestTimer from '../components/RestTimer';
 
 const CreateRoutine = () => {
   const navigate = useNavigate();
@@ -55,6 +56,7 @@ const CreateRoutine = () => {
       <WorkoutForm />
       <ExerciseNotes />
       <YoutubeVideo />
+      <RestTimer />
       <h1 className='mt-4'>Ejercicios</h1>
       <ExerciseList />
       <div className="action-buttons">

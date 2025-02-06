@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useWorkout } from '../context/WorkoutContext';
-import { MdExpandMore, MdExpandLess, MdAdd, MdVisibility, MdVisibilityOff } from 'react-icons/md';
+import { MdExpandMore, MdExpandLess, MdAdd, MdVisibility, MdVisibilityOff, MdFitnessCenter } from 'react-icons/md';
 import Swal from 'sweetalert2';
 import '../styles/WorkoutForm.css';
 
@@ -68,7 +68,10 @@ const WorkoutForm = () => {
       />
       
       <div className="form-header">
-        <h2>Añadir Ejercicio</h2>
+        <h2>
+          <MdFitnessCenter className="header-icon" />
+          Añadir Ejercicio
+        </h2>
         <button 
           type="button"
           className="toggle-form-btn"

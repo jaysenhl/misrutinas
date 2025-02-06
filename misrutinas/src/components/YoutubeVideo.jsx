@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MdVisibility, MdVisibilityOff, MdSearch } from 'react-icons/md';
+import { MdVisibility, MdVisibilityOff, MdSearch, MdPlayCircle } from 'react-icons/md';
 import axios from 'axios';
 import '../styles/YoutubeVideo.css';
 
@@ -43,7 +43,10 @@ const YoutubeVideo = () => {
   return (
     <div className="youtube-section">
       <div className="youtube-header">
-        <h2>Ver Youtube</h2>
+        <h2>
+          <MdPlayCircle className="header-icon" />
+          Ver Youtube
+        </h2>
         <button 
           className="toggle-youtube-btn"
           onClick={() => setIsExpanded(!isExpanded)}

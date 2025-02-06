@@ -83,6 +83,8 @@
   margin: 0;
   font-size: 1.2rem;
   color: #333;
+  display: flex;
+  align-items: center;
 }
 
 .toggle-form-btn {
@@ -154,4 +156,11 @@
   .exercise-form-container.expanded {
     max-height: 600px; /* Más espacio para móviles */
   }
+}
+
+.header-icon {
+  font-size: 1.4rem;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+  color: #d35400;
 } 

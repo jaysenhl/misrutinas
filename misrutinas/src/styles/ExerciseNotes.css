@@ -17,6 +17,8 @@
   margin: 0;
   font-size: 1.2rem;
   color: #333;
+  display: flex;
+  align-items: center;
 }
 
 .toggle-notes-btn {
@@ -171,4 +173,11 @@
     justify-content: flex-end;
     margin-top: 0.5rem;
   }
+}
+
+.header-icon {
+  font-size: 1.4rem;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+  color: #d35400;
 } 
