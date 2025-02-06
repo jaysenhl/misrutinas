@@ -75,6 +75,15 @@ export function SortableExerciseItem({ exercise }) {
         id: Date.now().toString()
       }
     });
+
+    // Añadimos el Swal alert de éxito
+    Swal.fire({
+      icon: 'success',
+      title: '¡Ejercicio duplicado!',
+      text: `Se ha duplicado ${exercise.name}`,
+      showConfirmButton: false,
+      timer: 1500
+    });
   };
 
   const handleSetComplete = (setIndex) => {
@@ -121,11 +130,11 @@ export function SortableExerciseItem({ exercise }) {
         </div>
         {isExpanded && (
           <div className="exercise-actions">
-            <button onClick={handleDuplicateExercise} title="Duplicar">
-              <MdContentCopy />
+            <button className="copy" onClick={handleDuplicateExercise} title="Duplicar">
+              <MdContentCopy size={40} />
             </button>
-            <button onClick={handleDeleteExercise} title="Eliminar">
-              <MdDelete />
+            <button className="delete" onClick={handleDeleteExercise} title="Eliminar">
+              <MdDelete size={40} />
             </button>
           </div>
         )}

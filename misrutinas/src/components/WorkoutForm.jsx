@@ -47,6 +47,14 @@ const WorkoutForm = () => {
       }
     });
 
+    Swal.fire({
+      icon: 'success',
+      title: '¡Ejercicio añadido!',
+      text: `Se ha añadido ${exerciseData.name} a tu rutina`,
+      showConfirmButton: false,
+      timer: 1500
+    });
+
     setExerciseData({
       name: '',
       category: '',

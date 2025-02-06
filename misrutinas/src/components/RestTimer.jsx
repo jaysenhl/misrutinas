@@ -1,7 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MdVisibility, MdVisibilityOff, MdPlayArrow, MdPause, MdStop, MdTimer } from 'react-icons/md';
-import Swal from 'sweetalert2';
-import timerSound from '../assets/sounds/timer-alert.mp3';
 import '../styles/RestTimer.css';
 
 const RestTimer = () => {
@@ -11,7 +9,6 @@ const RestTimer = () => {
   const [isRunning, setIsRunning] = useState(false);
   const [timeLeft, setTimeLeft] = useState(0);
   const intervalRef = useRef(null);
-  const audioRef = useRef(new Audio(timerSound));
 
   useEffect(() => {
     if (isRunning && timeLeft > 0) {
@@ -20,15 +17,9 @@ const RestTimer = () => {
           if (time <= 10) {
             clearInterval(intervalRef.current);
             setIsRunning(false);
-            audioRef.current.play();
-            Swal.fire({
-              title: '¡TIEMPO ACABADO!',
-              icon: 'success',
-              confirmButtonColor: '#d35400'
-            });
             return 0;
           }
-          return time - 10; // Actualiza cada 10ms para mostrar milisegundos
+          return time - 10;
         });
       }, 10);
     }
