@@ -1,3 +1,14 @@
+/* Añade esto al inicio del archivo App.css existente */
+:root {
+  --primary-color: #d35400;
+  --primary-hover: #e67e22;
+  --success-color: #27ae60;
+  --danger-color: #d33;
+  --text-color: #333;
+  --border-color: #ddd;
+  --background-light: #f8f8f8;
+}
+
 /* Reset básico */
 * {
   margin: 0;
@@ -31,6 +42,7 @@ body {
   width: 100%;
   padding: 20px;
   padding-bottom: 70px; /* Espacio para el footer */
+  min-height: calc(100vh - 120px); /* Ajusta según la altura de tu navbar y footer */
 }
 
 /* Contenedores responsivos */
@@ -54,4 +66,35 @@ body {
     padding: 10px;
     padding-bottom: 60px;
   }
+}
+
+/* Estilos generales para inputs y botones */
+input, select, button {
+  font-family: inherit;
+}
+
+/* Mejoras de accesibilidad */
+button:focus, 
+input:focus, 
+select:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Estilos para el scroll */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
 }

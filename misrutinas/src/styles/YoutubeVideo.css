@@ -1,0 +1,162 @@
+.youtube-section {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+}
+
+.youtube-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.youtube-header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.toggle-youtube-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  color: #666;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  min-width: 110px;
+  justify-content: center;
+}
+
+.toggle-youtube-btn:hover {
+  background-color: #f0f0f0;
+  color: #d35400;
+}
+
+.youtube-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.youtube-content.expanded {
+  max-height: 2000px;
+}
+
+.search-form {
+  padding: 1rem;
+}
+
+.search-container {
+  display: flex;
+  gap: 1rem;
+}
+
+.search-input {
+  flex: 1;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.search-btn {
+  background: #d35400;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.search-btn:hover {
+  background: #e67e22;
+}
+
+.video-container {
+  padding: 0 1rem 1rem;
+}
+
+.selected-video {
+  margin-bottom: 1rem;
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+  height: 0;
+  overflow: hidden;
+}
+
+.selected-video iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.video-list {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+
+.video-item {
+  cursor: pointer;
+  transition: transform 0.2s;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f8f8f8;
+}
+
+.video-item:hover {
+  transform: translateY(-2px);
+}
+
+.video-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.video-info {
+  padding: 0.8rem;
+}
+
+.video-info h3 {
+  margin: 0;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.video-info p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .video-list {
+    grid-template-columns: 1fr;
+  }
+} 

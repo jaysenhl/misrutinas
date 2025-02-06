@@ -1,5 +1,56 @@
 .create-routine {
-  padding: 20px;
+  padding: 2rem 1rem;
   max-width: 800px;
   margin: 0 auto;
+}
+
+.create-routine h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.action-buttons {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.save-draft-btn {
+  padding: 1rem 2rem;
+  background-color: #d35400;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.save-draft-btn:hover {
+  background-color: #e67e22;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.save-draft-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 768px) {
+  .create-routine {
+    padding: 1rem;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    padding: 0 1rem;
+  }
+
+  .save-draft-btn {
+    width: 100%;
+  }
 } 

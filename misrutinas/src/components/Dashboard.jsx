@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MdAddCircle, MdList, MdPerson } from 'react-icons/md';
+import { MdAddCircle, MdList, MdPerson, MdHistory } from 'react-icons/md';
 import '../styles/Dashboard.css';
 
 const Dashboard = () => {
@@ -12,9 +12,13 @@ const Dashboard = () => {
           <MdAddCircle className="button-icon" />
           Crear Rutina
         </Link>
+        <Link to="/borradores" className="menu-button">
+          <MdHistory className="button-icon" />
+          Borradores
+        </Link>
         <Link to="/ver-rutinas" className="menu-button">
           <MdList className="button-icon" />
-          Ver Rutinas Completadas
+          Rutinas Completadas
         </Link>
         <Link to="/mi-info" className="menu-button">
           <MdPerson className="button-icon" />
