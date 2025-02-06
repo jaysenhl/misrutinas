@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MdVisibility, MdVisibilityOff, MdPlayArrow, MdPause, MdStop, MdTimer } from 'react-icons/md';
+import Swal from 'sweetalert2';
 import '../styles/RestTimer.css';
 
 const RestTimer = () => {
@@ -17,6 +18,13 @@ const RestTimer = () => {
           if (time <= 10) {
             clearInterval(intervalRef.current);
             setIsRunning(false);
+            Swal.fire({
+              title: '¡TIEMPO ACABADO!',
+              icon: 'success',
+              confirmButtonColor: '#d35400',
+              timer: 2000,
+              showConfirmButton: false
+            });
             return 0;
           }
           return time - 10;

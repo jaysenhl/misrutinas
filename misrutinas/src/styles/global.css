@@ -4,4 +4,10 @@
 
 * {
   font-family: "Nova Flat", serif;
+}
+
+body {
+  background-color: #b6c4e6;  /* Gris azulado suave */
+  margin: 0;
+  padding: 0;
 } 
