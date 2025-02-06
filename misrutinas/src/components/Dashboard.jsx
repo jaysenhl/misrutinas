@@ -14,7 +14,7 @@ const Dashboard = () => {
         </Link>
         <Link to="/ver-rutinas" className="menu-button">
           <MdList className="button-icon" />
-          Ver Rutinas
+          Ver Mis Rutinas
         </Link>
         <Link to="/mi-info" className="menu-button">
           <MdPerson className="button-icon" />
