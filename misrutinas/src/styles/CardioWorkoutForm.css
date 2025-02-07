@@ -1,0 +1,46 @@
+.cardio-form {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.cardio-form label {
+ 
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+/* Reutilizamos la mayoría de los estilos de WorkoutForm */
+.cardio-form .form-header {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.cardio-form .form-header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #333;
+  display: flex;
+  align-items: center;
+}
+
+.header-icon {
+  font-size: 1.4rem;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+  color: #d35400;
+}
+
+/* ... resto de los estilos similares a WorkoutForm ... */
+
+.form-row input:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+  color: #666;
+} 

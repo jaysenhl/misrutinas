@@ -1,13 +1,21 @@
 .create-routine {
-  padding: 2rem 1rem;
   max-width: 800px;
   margin: 0 auto;
+  padding: 2rem 1rem;
 }
 
+
 .create-routine h1 {
-  text-align: center;
-  margin-bottom: 2rem;
   color: #333;
+}
+
+/* Para asegurar que los componentes tengan el mismo ancho */
+.workout-form,
+.cardio-form,
+.exercise-notes,
+.youtube-section,
+.rest-timer {
+  width: 100%;
 }
 
 .action-buttons {

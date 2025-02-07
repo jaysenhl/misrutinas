@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import '../styles/CreateRoutine.css';
 import YoutubeVideo from '../components/YoutubeVideo';
 import RestTimer from '../components/RestTimer';
+import CardioWorkoutForm from '../components/CardioWorkoutForm';
 
 const CreateRoutine = () => {
   const navigate = useNavigate();
@@ -54,6 +55,7 @@ const CreateRoutine = () => {
     <div className="create-routine">
       <h1>Crear Rutina</h1>
       <WorkoutForm />
+      <CardioWorkoutForm />
       <ExerciseNotes />
       <YoutubeVideo />
       <RestTimer />

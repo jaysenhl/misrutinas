@@ -147,6 +147,24 @@ function workoutReducer(state, action) {
         ...state,
         notes: state.notes.filter(note => note.id !== action.payload)
       };
+    case 'DELETE_SET': {
+      const { exerciseId, setIndex } = action.payload;
+      return {
+        ...state,
+        currentWorkout: {
+          ...state.currentWorkout,
+          exercises: state.currentWorkout.exercises.map(exercise => {
+            if (exercise.id === exerciseId) {
+              return {
+                ...exercise,
+                sets: exercise.sets.filter((_, index) => index !== setIndex)
+              };
+            }
+            return exercise;
+          })
+        }
+      };
+    }
     default:
       return state;
   }

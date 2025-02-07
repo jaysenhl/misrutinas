@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
+import { MdDirectionsRun, MdVisibility, MdVisibilityOff, MdAdd } from 'react-icons/md';
 import { useWorkout } from '../context/WorkoutContext';
-import { MdExpandMore, MdExpandLess, MdAdd, MdVisibility, MdVisibilityOff, MdFitnessCenter } from 'react-icons/md';
 import Swal from 'sweetalert2';
-import '../styles/WorkoutForm.css';
+import '../styles/CardioWorkoutForm.css';
 
-const WorkoutForm = () => {
-  const { state, dispatch } = useWorkout();
+const CardioWorkoutForm = () => {
+  const { dispatch } = useWorkout();
   const [isFormExpanded, setIsFormExpanded] = useState(false);
   const [exerciseData, setExerciseData] = useState({
     name: '',
@@ -13,24 +13,10 @@ const WorkoutForm = () => {
     equipment: '',
     weight: '',
     sets: '',
-    reps: ''
+    reps: '',
+    distance: '',
+    duration: ''
   });
-
-  const handleWorkoutNameChange = (e) => {
-    dispatch({
-      type: 'UPDATE_CURRENT_WORKOUT',
-      payload: { name: e.target.value }
-    });
-  };
-
-  const handleEquipmentChange = (e) => {
-    const equipment = e.target.value;
-    setExerciseData({
-      ...exerciseData,
-      equipment,
-      weight: equipment === 'peso-corporal' ? 'N/A' : ''
-    });
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,14 +29,27 @@ const WorkoutForm = () => {
       return;
     }
 
+    // Validar el formato de duración
+    if (exerciseData.duration && !/^[0-9]{1,2}:[0-9]{2}:[0-9]{2}$/.test(exerciseData.duration)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Formato inválido',
+        text: 'El formato de duración debe ser hh:mm:ss'
+      });
+      return;
+    }
+
     dispatch({
       type: 'ADD_EXERCISE',
       payload: {
         id: Date.now().toString(),
         ...exerciseData,
+        type: 'cardio',
         sets: Array(Number(exerciseData.sets)).fill({
           weight: Number(exerciseData.weight),
           reps: Number(exerciseData.reps),
+          distance: Number(exerciseData.distance),
+          duration: exerciseData.duration,
           completed: false
         })
       }
@@ -58,7 +57,7 @@ const WorkoutForm = () => {
 
     Swal.fire({
       icon: 'success',
-      title: '¡Ejercicio añadido!',
+      title: '¡Ejercicio de cardio añadido!',
       text: `Se ha añadido ${exerciseData.name} a tu rutina`,
       showConfirmButton: false,
       timer: 1500
@@ -70,25 +69,30 @@ const WorkoutForm = () => {
       equipment: '',
       weight: '',
       sets: '',
-      reps: ''
+      reps: '',
+      distance: '',
+      duration: ''
+    });
+  };
+
+  // Añadir esta función para manejar el cambio de equipo
+  const handleEquipmentChange = (e) => {
+    const equipment = e.target.value;
+    setExerciseData({
+      ...exerciseData,
+      equipment,
+      // Si es peso corporal, establecer 'N/A', si no, limpiar el campo
+      weight: equipment === 'peso-corporal' ? 'N/A' : ''
     });
   };
 
   return (
-    <div className="workout-form">
-      <input
-        type="text"
-        placeholder="Nombre de la Rutina- ej: Pecho, Espalda, etc."
-        value={state.currentWorkout?.name || ''}
-        onChange={handleWorkoutNameChange}
-        className="routine-name-input"
-      />
-      
-        <label>Ejercicios De Pesas</label>
+    <div className="cardio-form">
+      <label>Ejercicios De Cardio</label>
       <div className="form-header">
         <h2>
-          <MdFitnessCenter className="header-icon" />
-          Añadir Ejercicio
+          <MdDirectionsRun className="header-icon" />
+          Añadir Cardio
         </h2>
         <button 
           type="button"
@@ -114,13 +118,13 @@ const WorkoutForm = () => {
           <div className="form-row">
             <input
               type="text"
-              placeholder="Categoría - ej Upper body, Lower body, etc."
+              placeholder="Categoría - ej: HIIT, Steady State, etc."
               value={exerciseData.category}
               onChange={(e) => setExerciseData({...exerciseData, category: e.target.value})}
             />
             <input
               type="text"
-              placeholder="Nombre del Ejercicio - ej: Pushups, Sentadillas, etc."
+              placeholder="Nombre del Ejercicio - ej: Running, Cycling, etc."
               value={exerciseData.name}
               onChange={(e) => setExerciseData({...exerciseData, name: e.target.value})}
             />
@@ -134,9 +138,6 @@ const WorkoutForm = () => {
               <option value="">Selecciona el equipo</option>
               <option value="peso-corporal">Peso Corporal</option>
               <option value="maquina">Máquina</option>
-              <option value="mancuernas">Dumbells</option>
-              <option value="kettlebells">Kettlebells</option>
-              <option value="barra">Barra</option>
             </select>
             
             <input
@@ -169,9 +170,43 @@ const WorkoutForm = () => {
             />
           </div>
 
+          <div className="form-row">
+            <input
+              type="number"
+              placeholder="Distancia (millas)"
+              value={exerciseData.distance}
+              onChange={(e) => setExerciseData({...exerciseData, distance: e.target.value})}
+              min="0"
+              step="0.1"
+            />
+            <input
+              type="text"
+              placeholder="Duración (hh:mm:ss)"
+              value={exerciseData.duration}
+              onChange={(e) => {
+                const value = e.target.value;
+                // Permitir formato más flexible mientras escribe
+                if (value === '' || /^[0-9]{0,2}(:[0-9]{0,2})?(:[0-9]{0,2})?$/.test(value)) {
+                  setExerciseData({...exerciseData, duration: value});
+                }
+              }}
+              onBlur={(e) => {
+                // Formatear al perder el foco
+                const value = e.target.value;
+                if (value) {
+                  const parts = value.split(':');
+                  const formattedParts = parts.map(part => part.padStart(2, '0'));
+                  while (formattedParts.length < 3) formattedParts.unshift('00');
+                  const formattedValue = formattedParts.join(':');
+                  setExerciseData({...exerciseData, duration: formattedValue});
+                }
+              }}
+            />
+          </div>
+
           <button type="submit" className="add-exercise-btn">
             <MdAdd className="btn-icon" />
-            Añadir Ejercicio
+            Añadir Cardio
           </button>
         </form>
       </div>
@@ -179,4 +214,4 @@ const WorkoutForm = () => {
   );
 };
 
-export default WorkoutForm; 
+export default CardioWorkoutForm; 
