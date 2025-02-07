@@ -51,9 +51,26 @@ const CreateRoutine = () => {
     }
   };
 
+  // Función para obtener la fecha formateada
+  const getCurrentDate = () => {
+    const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+    const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    
+    const now = new Date();
+    const dayName = days[now.getDay()];
+    const monthName = months[now.getMonth()];
+    const date = now.getDate();
+    const year = now.getFullYear();
+
+    return `${dayName}, ${monthName} ${date}, ${year}`;
+  };
+
   return (
     <div className="create-routine">
+      <div className="current-date">
+        {getCurrentDate()}
       <h1>Crear Rutina</h1>
+      </div>
       <WorkoutForm />
       <CardioWorkoutForm />
       <ExerciseNotes />

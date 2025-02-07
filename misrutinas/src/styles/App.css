@@ -30,19 +30,21 @@ body {
 /* Layout principal */
 .App {
   min-height: 100vh;
-  width: 100%;
   display: flex;
   flex-direction: column;
-  position: relative;
+}
+
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Contenido principal */
 .main-content {
   flex: 1;
-  width: 100%;
-  padding: 20px;
-  padding-bottom: 70px; /* Espacio para el footer */
-  min-height: calc(100vh - 120px); /* Ajusta según la altura de tu navbar y footer */
+  padding: 2rem;
+  background-color: #b6c4e6;
 }
 
 /* Contenedores responsivos */
@@ -56,8 +58,7 @@ body {
 /* Media queries */
 @media (max-width: 768px) {
   .main-content {
-    padding: 15px;
-    padding-bottom: 60px;
+    padding: 1rem;
   }
 }
 

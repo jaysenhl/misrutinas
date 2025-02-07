@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MdHome, MdAddCircle, MdList, MdPerson } from 'react-icons/md';
+import { MdHome, MdAddCircle, MdList, MdPerson, MdLogout } from 'react-icons/md';
 import '../styles/Navbar.css';
+import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { logout } = useAuth();
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
   };
 
   return (
@@ -49,6 +58,14 @@ const Navbar = () => {
           </Link>
         </li>
       </ul>
+
+      <button 
+        className="logout-btn"
+        onClick={handleLogout}
+      >
+        <MdLogout className="btn-icon" />
+        Cerrar Sesión
+      </button>
     </nav>
   );
 };

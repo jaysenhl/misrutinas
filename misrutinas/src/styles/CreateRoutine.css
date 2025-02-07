@@ -48,6 +48,16 @@
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
+.current-date {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 2rem;
+  font-weight: 500;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
 @media (max-width: 768px) {
   .create-routine {
     padding: 1rem;
@@ -60,5 +70,11 @@
 
   .save-draft-btn {
     width: 100%;
+  }
+
+  .current-date {
+    font-size: 1.5rem;
+    padding: 0.8rem;
+    margin-bottom: 1.5rem;
   }
 } 
