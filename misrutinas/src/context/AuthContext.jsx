@@ -2,7 +2,9 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { 
   CognitoIdentityProviderClient, 
   InitiateAuthCommand,
-  RespondToAuthChallengeCommand
+  RespondToAuthChallengeCommand,
+  GetUserCommand,
+  UpdateUserAttributesCommand
 } from "@aws-sdk/client-cognito-identity-provider";
 import crypto from 'crypto-js';
 import Swal from 'sweetalert2';
@@ -88,6 +90,45 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const updateUserSessionToken = async (accessToken) => {
+    try {
+      const command = new UpdateUserAttributesCommand({
+        AccessToken: accessToken,
+        UserAttributes: [
+          {
+            Name: 'custom:sessionToken',
+            Value: accessToken
+          }
+        ]
+      });
+
+      await client.send(command);
+    } catch (error) {
+      console.error('Error actualizando token de sesión:', error);
+      throw new Error('ACTIVE_SESSION_EXISTS');
+    }
+  };
+
+  const checkActiveSession = async (accessToken) => {
+    try {
+      const command = new GetUserCommand({
+        AccessToken: accessToken
+      });
+
+      const response = await client.send(command);
+      const sessionAttribute = response.UserAttributes.find(
+        attr => attr.Name === 'custom:sessionToken'
+      );
+
+      if (sessionAttribute && sessionAttribute.Value && sessionAttribute.Value !== accessToken) {
+        throw new Error('ACTIVE_SESSION_EXISTS');
+      }
+    } catch (error) {
+      console.error('Error verificando sesión activa:', error);
+      throw error;
+    }
+  };
+
   const login = async (email, password) => {
     try {
       const command = new InitiateAuthCommand({
@@ -101,18 +142,35 @@ export const AuthProvider = ({ children }) => {
       });
 
       const response = await client.send(command);
-      console.log('Respuesta completa:', response);
       
       if (response.AuthenticationResult) {
         const { AccessToken, IdToken } = response.AuthenticationResult;
-        sessionStorage.setItem('accessToken', AccessToken);
-        sessionStorage.setItem('idToken', IdToken);
-        setIsAuthenticated(true);
-        const username = email.split('@')[0];
-        setUser({ username });
-        sessionStorage.setItem('username', username);
-        startSessionTimeout();
-        return response;
+        
+        try {
+          // Verificar si hay una sesión activa
+          await checkActiveSession(AccessToken);
+          // Actualizar el token de sesión
+          await updateUserSessionToken(AccessToken);
+          
+          sessionStorage.setItem('accessToken', AccessToken);
+          sessionStorage.setItem('idToken', IdToken);
+          const username = email.split('@')[0];
+          setUser({ username });
+          sessionStorage.setItem('username', username);
+          setIsAuthenticated(true);
+          startSessionTimeout();
+          return response;
+        } catch (error) {
+          if (error.message === 'ACTIVE_SESSION_EXISTS') {
+            Swal.fire({
+              icon: 'error',
+              title: 'Sesión activa',
+              text: 'Ya existe una sesión activa en otro dispositivo. Cierra la sesión anterior para continuar.'
+            });
+            throw error;
+          }
+          throw error;
+        }
       } else if (response.ChallengeName === "NEW_PASSWORD_REQUIRED") {
         // Mostrar modal para cambio de contraseña
         const { value: newPassword } = await Swal.fire({
@@ -139,21 +197,33 @@ export const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       console.error('Error completo:', error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Error de autenticación',
-        text: error.message || 'El email o la contraseña son incorrectos'
-      });
+      if (error.message !== 'ACTIVE_SESSION_EXISTS') {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error de autenticación',
+          text: error.message || 'El email o la contraseña son incorrectos'
+        });
+      }
       throw error;
     }
   };
 
-  const logout = () => {
-    sessionStorage.removeItem('accessToken');
-    sessionStorage.removeItem('idToken');
-    sessionStorage.removeItem('username');
-    setUser(null);
-    setIsAuthenticated(false);
+  const logout = async () => {
+    try {
+      const accessToken = sessionStorage.getItem('accessToken');
+      if (accessToken) {
+        // Limpiar el token de sesión al hacer logout
+        await updateUserSessionToken('');
+      }
+    } catch (error) {
+      console.error('Error en logout:', error);
+    } finally {
+      sessionStorage.removeItem('accessToken');
+      sessionStorage.removeItem('idToken');
+      sessionStorage.removeItem('username');
+      setUser(null);
+      setIsAuthenticated(false);
+    }
   };
 
   return (
